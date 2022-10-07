@@ -11,10 +11,6 @@ router.get('/', (req, res) => {
     res.send("hello")
 })
 
-router.get("/createPost", requireLogin, (req, res) => {
-    console.log("hello auth")
-})
-
 router.post("/signup", (req, res) => {
     const { name, userName, email, password } = req.body;
     if (!name || !email || !userName || !password) {
