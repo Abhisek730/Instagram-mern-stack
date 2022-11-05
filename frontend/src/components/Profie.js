@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Profile.css";
 
 export default function Profie() {
+  const [pic, setPic] = useState([]);
+  useEffect(() => {
+    fetch("http://localhost:5000/myposts", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setPic(result);
+        console.log(pic);
+      });
+  }, []);
+
   return (
     <div className="profile">
       {/* Profile frame */}
@@ -33,30 +47,9 @@ export default function Profie() {
       />
       {/* Gallery */}
       <div className="gallery">
-        <img
-          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          alt=""
-        />
-        <img
-          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          alt=""
-        />
-        <img
-          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          alt=""
-        />
-        <img
-          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          alt=""
-        />
-        <img
-          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          alt=""
-        />
-        <img
-          src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8cGVyc29ufGVufDB8MnwwfHw%3D&auto=format&fit=crop&w=500&q=60"
-          alt=""
-        />
+        {pic.map((pics) => {
+          return <img key={pics._id} src={pics.photo} className="item"></img>;
+        })}
       </div>
     </div>
   );
