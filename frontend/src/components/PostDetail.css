@@ -1,0 +1,57 @@
+.showComment {
+  width: 100vw;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(16, 13, 13, 0.4);
+}
+
+.container {
+  display: flex;
+  width: 80%;
+  background-color: white;
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  height: 500px;
+}
+
+.postPic {
+  background-color: black;
+  display: flex;
+  align-items: center;
+}
+
+.postPic img {
+  object-fit: contain;
+  width: 100%;
+}
+
+.details {
+  width: 100%;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-section {
+  flex-grow: 4;
+  text-align: left;
+  margin-left: 10px;
+}
+
+.close-comment {
+  position: fixed;
+  top: 1%;
+  right: 5%;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.deletePost {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}

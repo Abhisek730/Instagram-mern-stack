@@ -35,6 +35,7 @@ router.post("/createPost", requireLogin, (req, res) => {
 router.get("/myposts", requireLogin, (req, res) => {
     POST.find({ postedBy: req.user._id })
         .populate("postedBy", "_id name")
+        .populate("comments.postedBy", "_id name")
         .then(myposts => {
             res.json(myposts)
         })
@@ -89,4 +90,24 @@ router.put("/comment", requireLogin, (req, res) => {
         })
 })
 
+// Api to delete post
+router.delete("/deletePost/:postId", requireLogin, (req, res) => {
+    POST.findOne({ _id: req.params.postId })
+        .populate("postedBy", "_id")
+        .exec((err, post) => {
+            if (err || !post) {
+                return res.status(422).json({ error: err })
+            }
+
+            if (post.postedBy._id.toString() == req.user._id.toString()) {
+
+                post.remove()
+                    .then(result => {
+                        return res.json({ message: "Successfully deleted" })
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+            }
+        })
+})
 module.exports = router

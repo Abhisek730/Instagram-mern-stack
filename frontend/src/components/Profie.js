@@ -1,8 +1,23 @@
 import React, { useEffect, useState } from "react";
+import PostDetail from "./PostDetail";
 import "./Profile.css";
 
 export default function Profie() {
   const [pic, setPic] = useState([]);
+  const [show, setShow] = useState(false)
+  const [posts, setPosts] = useState([])
+
+
+  const toggleDetails = (posts) => {
+    if (show) {
+      setShow(false);
+    } else {
+      setShow(true);
+      setPosts(posts);
+    }
+  };
+
+
   useEffect(() => {
     fetch("http://localhost:5000/myposts", {
       headers: {
@@ -48,9 +63,16 @@ export default function Profie() {
       {/* Gallery */}
       <div className="gallery">
         {pic.map((pics) => {
-          return <img key={pics._id} src={pics.photo} className="item"></img>;
+          return <img key={pics._id} src={pics.photo}
+            onClick={() => {
+              toggleDetails(pics)
+            }}
+            className="item"></img>;
         })}
       </div>
+      {show &&
+        <PostDetail item={posts} toggleDetails={toggleDetails} />
+      }
     </div>
   );
 }
