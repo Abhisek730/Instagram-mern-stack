@@ -11,6 +11,7 @@ require('./models/post')
 app.use(express.json())
 app.use(require("./routes/auth"))
 app.use(require("./routes/createPost"))
+app.use(require("./routes/user"))
 mongoose.connect(mongoUrl);
 
 mongoose.connection.on("connected", () => {
