@@ -46,13 +46,14 @@ router.put("/like", requireLogin, (req, res) => {
         $push: { likes: req.user._id }
     }, {
         new: true
-    }).exec((err, result) => {
-        if (err) {
-            return res.status(422).json({ error: err })
-        } else {
-            res.json(result)
-        }
-    })
+    }).populate("postedBy", "_id name")
+        .exec((err, result) => {
+            if (err) {
+                return res.status(422).json({ error: err })
+            } else {
+                res.json(result)
+            }
+        })
 })
 
 router.put("/unlike", requireLogin, (req, res) => {
@@ -60,13 +61,14 @@ router.put("/unlike", requireLogin, (req, res) => {
         $pull: { likes: req.user._id }
     }, {
         new: true
-    }).exec((err, result) => {
-        if (err) {
-            return res.status(422).json({ error: err })
-        } else {
-            res.json(result)
-        }
-    })
+    }).populate("postedBy", "_id name")
+        .exec((err, result) => {
+            if (err) {
+                return res.status(422).json({ error: err })
+            } else {
+                res.json(result)
+            }
+        })
 })
 
 router.put("/comment", requireLogin, (req, res) => {
@@ -110,4 +112,16 @@ router.delete("/deletePost/:postId", requireLogin, (req, res) => {
             }
         })
 })
+
+// to show following post
+router.get("/myfollwingpost", requireLogin, (req, res) => {
+    POST.find({ postedBy: { $in: req.user.following } })
+        .populate("postedBy", "_id name")
+        .populate("comments.postedBy", "_id name")
+        .then(posts => {
+            res.json(posts)
+        })
+        .catch(err => { console.log(err) })
+})
+
 module.exports = router
