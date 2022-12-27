@@ -66,4 +66,19 @@ router.put("/unfollow", requireLogin, (req, res) => {
     )
 })
 
+// to upload profile pic
+router.put("/uploadProfilePic", requireLogin, (req, res) => {
+    USER.findByIdAndUpdate(req.user._id, {
+        $set: { Photo: req.body.pic }
+    }, {
+        new: true
+    }).exec((err, result) => {
+        if (err) {
+            return res.status(422).json({ error: er })
+        } else {
+            res.json(result)
+        }
+    })
+})
+
 module.exports = router;

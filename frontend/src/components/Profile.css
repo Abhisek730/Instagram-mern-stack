@@ -53,3 +53,21 @@
   transform: scale(1.1);
   box-shadow: 0 10px 20px -10px #0115eb;
 }
+
+.changePic {
+  background-color: #fff;
+  border-radius: 20px;
+}
+
+.changePic div {
+  padding: 15px 80px;
+}
+
+.upload-btn {
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-weight: bolder;
+
+  font-size: 15px;
+}
